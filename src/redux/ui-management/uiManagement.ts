@@ -4,7 +4,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 type ThemeType="dark"|"light"
 type InitialStateType= {showMenu:boolean,theme:ThemeType};
 
-const initialState: InitialStateType = {showMenu:false,theme:"light"};
+const initialState: InitialStateType = {showMenu:false,theme:localStorage.getItem("theme") as ThemeType || "light"};
 
 const uiManagerSlice=createSlice({
     name:"ui-manager",
@@ -14,7 +14,9 @@ const uiManagerSlice=createSlice({
             state.showMenu=action.payload
         },
         setTheme:(state:InitialStateType)=>{
-            state.theme=state.theme === "light" ? "dark" : "light"
+            const newTheme = state.theme === "light" ? "dark" : "light"
+            state.theme=newTheme
+            localStorage.setItem("theme",newTheme)
         }
     }
 })
