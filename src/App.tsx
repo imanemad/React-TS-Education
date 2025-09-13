@@ -1,17 +1,17 @@
-import { useState } from "react"
 import Content from "./layout/content/Content"
 import Header from "./layout/header/Header"
 import Sidebar from "./layout/sidebar/Sidebar"
+import { useAppSelector } from "./redux/ui-management/reduxHooks"
 
 function App() {
-  const[showMenu,setShowMenu]=useState(false)
+  const {theme}=useAppSelector(state=>state.uiManagerReducer)
 
   return (
-    <>
+    <main className={`min-w-[320px] min-h-screen ${theme}`}>
       <Content />
-      <Header  setShowMenu={()=>setShowMenu(!showMenu)}/>
-      <Sidebar showMenu={showMenu} setHiddenMenu={()=>setShowMenu(!showMenu)}/>
-    </>
+      <Header />
+      <Sidebar/>
+    </main>
   )
 }
 

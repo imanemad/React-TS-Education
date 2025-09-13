@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
     --spacing-sidebar: 400px;
     --height-header: 64px;
@@ -14,4 +16,11 @@
     direction: rtl;
     text-align: right;
     font-family: iransans;
+}
+
+a,button{
+    cursor: pointer;
+    &:active{
+        transform: translateY(2px);
+    }
 }

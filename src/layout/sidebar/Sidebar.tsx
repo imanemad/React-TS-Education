@@ -1,24 +1,46 @@
+import { IoCloseCircleOutline, IoMoonOutline, IoSunnyOutline } from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "../../redux/ui-management/reduxHooks"
+import { setShowMenu, setTheme } from "../../redux/ui-management/uiManagement"
 
-function Sidebar(
-    {
-        showMenu,
-        setHiddenMenu
-    }:{
-        showMenu:boolean,
-        setHiddenMenu:()=>void
-    }
-) {
+function Sidebar() {
+    const {showMenu, theme}=useAppSelector(store=>store.uiManagerReducer)
+    const dispatch=useAppDispatch()
     return (
-        <section 
-            id="sidebar" 
-            className={`fixed lg:right-0 top-0 w-sidebar h-screen bg-blue-400 lg:block transition-all 
-            ${showMenu?"right-0":"-right-sidebar"}`}>
+        <section id="sidebar" 
+                className={`
+                fixed 
+                top-0 
+                w-sidebar 
+                h-screen 
+                p-4
+                border-l
+                transition-all 
+                bg-gray-400 
 
-            sidebar
+                lg:right-0 
+                lg:block 
+                
+                dark:bg-gray-600
+                dark:text-gray-200
+                ${showMenu?"right-0":"-right-sidebar"}`}>
 
-            <button onClick={setHiddenMenu}>
-                مخفی کردن منو
-            </button>
+                <div className="flex justify-between items-center">
+
+                    <button 
+                        onClick={()=>dispatch(setShowMenu(false))}
+                        className="lg:hidden">
+                        <IoCloseCircleOutline size={24}/>
+                    </button>
+
+                    <button onClick={()=>dispatch(setTheme())}>
+                        {theme==="light" ?
+                            <IoMoonOutline size={20}/>
+                            :
+                            <IoSunnyOutline size={21}/>
+                        }
+                    </button>
+
+                </div>
         </section>
     )
 }
