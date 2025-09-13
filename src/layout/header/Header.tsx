@@ -15,7 +15,7 @@ function Header() {
                     w-full 
                     flex
                     items-center
-                    bg-gray-400 
+                    bg-gray-300 
 
                     lg:pr-[400px]
                     
