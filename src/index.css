@@ -14,7 +14,6 @@
 
 *{
     direction: rtl;
-    text-align: right;
     font-family: iransans;
 }
 
@@ -23,4 +22,8 @@ a,button{
     &:active{
         transform: translateY(2px);
     }
+}
+
+.Toastify__toast{
+    font-family: iransans;
 }

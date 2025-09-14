@@ -7,8 +7,6 @@ import SidebarContainer from "../../components/containers/SidebarContainer"
 
 
 function Sidebar() {
-    console.log("Sidebar");
-    
     return (
         <SidebarContainer>
 
