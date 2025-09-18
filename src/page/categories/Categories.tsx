@@ -1,28 +1,54 @@
 import { useEffect, useState } from "react";
-import { getTaskCategoriesServices } from "../../services/taskCategory"
+import { getTaskCategoriesService, RemoveTaskCategoryService } from "../../services/taskCategory"
 import { convertMiladiToJalali } from "../../utils/dateUtils";
 import { BsPen, BsTrash } from "react-icons/bs";
-import { successToast } from "../../utils/toastUtils";
+import ModalCategory from "./_partials/ModalCategory";
+import { successToast } from "@/utils/toastUtils";
 
 const Categories = () => {
+    const [modalState,setModalState]=useState<boolean>(false)
+    const [selectedItem,setSelectedItem]=useState<CategoryType>()
     const [categories,setCategories]=useState<CategoryType[]>([]);
     const handleGetCategories=async ()=>{
-        const data = await getTaskCategoriesServices()
-        if(data){
-            setCategories(data)
-            successToast("دسته بندی ها بارگذاری شد")
-        }
+        const data = await getTaskCategoriesService()
+        if(data) setCategories(data)
     }
 
     useEffect(()=>{
         handleGetCategories()
     },[])
+    //GetList
+    const handleSetCategories=(data:CategoryType)=>{
+        if (selectedItem){
+            setCategories(prevData=>{
+                const index = prevData.findIndex(q=>q.id === selectedItem.id)
+                const newCategoris = [...prevData]
+                newCategoris[index] = data
+                return newCategoris
+            })
+        }else{
+            setCategories([...categories,data])
+        }
+    }
+    //Remove
+    const handleRemove=async(category:CategoryType)=>{
+        const res=await RemoveTaskCategoryService(category.id)
+        if(res.status === 200){
+            handleGetCategories()
+            successToast("گروه مورد نظر حذف شد")
+        } 
+    }
 
     return (
         <div>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="font-bold text-lg">لیست دسته بندی وظایف</h1>
-                <button className="bg-sky-600 text-gray-100 rounded-lg px-4 py-1">افزودن جدید</button>
+                <ModalCategory 
+                    setCategories={handleSetCategories} 
+                    modalState={modalState} 
+                    setModalState={setModalState} 
+                    selectedItem={selectedItem}
+                    setSelectedItem={setSelectedItem}/>
             </div>
             <table className="table w-full rounded-lg overflow-hidden bg-white dark:bg-gray-600">
                 <thead>
@@ -42,10 +68,13 @@ const Categories = () => {
                             <td className="hidden sm:table-cell">{c.description}</td>
                             <td>{convertMiladiToJalali(c.createdAt)}</td>
                             <td className="flex justify-center pt-2 gap-4">
-                                <button>
+                                <button onClick={()=>{
+                                        setModalState(true)
+                                        setSelectedItem(c)
+                                    }}>
                                     <BsPen/>
                                 </button>
-                                <button className="text-red-400">
+                                <button className="text-red-400" onClick={()=>handleRemove(c)}>
                                     <BsTrash/>
                                 </button>
                             </td>
