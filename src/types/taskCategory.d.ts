@@ -9,3 +9,6 @@ interface AddCategoryType{
 interface CategoryType extends AddCategoryType{
     id: string,
 }
+interface CategoryWhithTasksType extends CategoryType{
+    tasks: TaskType[]
+}   

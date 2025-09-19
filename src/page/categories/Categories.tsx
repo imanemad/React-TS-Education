@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTaskCategoriesService, RemoveTaskCategoryService } from "../../services/taskCategory"
+import { getTaskCategoriesService, removeTaskCategoryService } from "../../services/taskCategory"
 import { convertMiladiToJalali } from "../../utils/dateUtils";
 import { BsPen, BsTrash } from "react-icons/bs";
 import ModalCategory from "./_partials/ModalCategory";
@@ -32,7 +32,7 @@ const Categories = () => {
     }
     //Remove
     const handleRemove=async(category:CategoryType)=>{
-        const res=await RemoveTaskCategoryService(category.id)
+        const res=await removeTaskCategoryService(category.id)
         if(res.status === 200){
             handleGetCategories()
             successToast("گروه مورد نظر حذف شد")

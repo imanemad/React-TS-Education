@@ -8,14 +8,18 @@ export const getTaskCategoriesService= async()=>{
     return null
 }
 
+export const gatTaskCategoriesWithTasksService= ()=>{
+    return httpService("/taskCategories?_embed=tasks","GET")
+}
+
 export const addTaskCategoryService= (category:AddCategoryType)=>{
     return httpService("/taskCategories","POST",category)
 }
 
-export const RemoveTaskCategoryService= (categoryId:string)=>{
+export const removeTaskCategoryService= (categoryId:string)=>{
     return httpService(`/taskCategories/${categoryId}`,"DELETE")
 }
 
-export const UpdateTaskCategoryService= (categoryId:string,category:AddCategoryType)=>{
+export const updateTaskCategoryService= (categoryId:string,category:AddCategoryType)=>{
     return httpService(`/taskCategories/${categoryId}`,"PUT",category)
 }

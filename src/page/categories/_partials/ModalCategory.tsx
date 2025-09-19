@@ -6,7 +6,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { addTaskCategoryService, UpdateTaskCategoryService } from "@/services/taskCategory"
+import { addTaskCategoryService, updateTaskCategoryService } from "@/services/taskCategory"
 import { successToast } from "@/utils/toastUtils"
 import { useEffect, useState } from "react"
 
@@ -41,7 +41,7 @@ const ModalCategory: React.FC<ModalCategoryProps> = ({
         setLoading(true)
         const res=
             selectedItem ? 
-            await UpdateTaskCategoryService(selectedItem.id,newCategory) 
+            await updateTaskCategoryService(selectedItem.id,newCategory) 
             : 
             await addTaskCategoryService(newCategory)
         if (res.status === 201 || res.status === 200){
