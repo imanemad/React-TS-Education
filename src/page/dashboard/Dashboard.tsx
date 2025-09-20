@@ -35,7 +35,6 @@ const Dashboard = () => {
                 ):(
                     <h1 className="mt-3 text-xl">امروز تسکی ندارید</h1>
                 )}
-                <ButtonSubmit title="افزودن وظیفه جدید"/>
             </div>
         </div>
     )
